@@ -14,7 +14,7 @@ export default function Profile() {
         <span>Bem vinda, APAD</span>
 
         <Link to="/incidents/new" className="button">
-            Voltar para o início
+            Cadastrar novo caso
         </Link>
 
         <button type="button">
