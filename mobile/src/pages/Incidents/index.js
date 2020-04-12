@@ -35,13 +35,13 @@ export default function Incidents() {
         showsVerticalScrollIndicator={false}
         renderItem={() => (
           <View style={styles.incident}>
-            <Text style={styles.incidentPropertty}>ONG:</Text>
+            <Text style={styles.incidentProperty}>ONG:</Text>
             <Text style={styles.incidentValue}>APAD</Text>
 
-            <Text style={styles.incidentPropertty}>CASO:</Text>
+            <Text style={styles.incidentProperty}>CASO:</Text>
             <Text style={styles.incidentValue}>Cadelinha atropelada</Text>
             
-            <Text style={styles.incidentPropertty}>VALOR:</Text>
+            <Text style={styles.incidentProperty}>VALOR:</Text>
             <Text style={styles.incidentValue}>R$ 120,00</Text>
 
             <TouchableOpacity 
