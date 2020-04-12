@@ -12,6 +12,8 @@ import styles from './styles';
 export default function Incidents() {
   const [incidents, setIncidents] = useState([]);
   const [total, setTotal] = useState(0);
+  const [page, setPage] = useState(1);
+  const [loading, setLoading] = useState(false);
   const navigation = useNavigation();
 
   function navigateToDetail(incident) { 
@@ -19,16 +21,27 @@ export default function Incidents() {
   }
 
   async function loadIncidents() {
-    try {
-      const response = await api.get('incidents');
+    if(loading) return;
 
-      setIncidents(response.data);
+    if(total > 0 && incidents.length === total) return;
+
+    setLoading(true);
+
+    try {
+      const response = await api.get('incidents', {
+        params: { page }
+      });
+
+      setIncidents([...incidents, ...response.data]);
       setTotal(response.headers['x-total-count'])
+      setLoading(false);
+      setPage(page + 1);
     } catch (error) {
       Alert.alert(
         'Erro ao buscar casos',
         'Não foi possível buscar novos casos, tente novamente mais tarde!'
       );
+      setLoading(false);
     }
   }
 
@@ -55,6 +68,8 @@ export default function Incidents() {
         style={styles.incidentsList}
         keyExtractor={incident => String(incident.id)}
         showsVerticalScrollIndicator={false}
+        onEndReached={loadIncidents}
+        onEndReachedThreshold={0.2}
         renderItem={({ item: incident }) => (
           <View style={styles.incident}>
             <Text style={styles.incidentProperty}>ONG:</Text>
